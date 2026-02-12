@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women's Organizing in Ghana Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        green: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534', // Deep Green Main
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* White Background */
+            color: #0f172a; /* Slate 900 */
+        }
+
+        /* Deep Green Accent */
+        .accent-bg { background-color: #166534; } 
+        .accent-text { color: #166534; }
+        .accent-border { border-color: #166534; }
+        .hover-accent-bg:hover { background-color: #14532d; } 
+
+        /* Smooth Transitions */
+        .card-enter {
+            animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .option-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .option-btn:hover:not(:disabled) {
+            transform: translateX(4px);
+            background-color: #f0fdf4; /* Green 50 */
+            border-color: #166534;
+        }
+
+        /* Circular Progress Animation */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Toast Animation */
+        .toast-enter {
+            animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes toastSlide {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Modal Backdrop */
+        .backdrop-blur {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Minimal Header -->
+    <header class="fixed top-0 w-full bg-white/95 backdrop-blur border-b border-slate-200 z-40">
+        <div class="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex flex-col leading-tight">
+                <span class="text-xs font-bold tracking-widest text-slate-400 uppercase">Gender Studies</span>
+                <span class="text-lg font-bold accent-text">Women's Organizing</span>
+            </div>
+            
+            <!-- Mini Progress Pie (Top Right) -->
+            <div id="mini-progress-container" class="hidden flex items-center gap-3">
+                <div class="text-right">
+                    <div class="text-xs text-slate-400 font-medium">Score</div>
+                    <div class="font-bold text-slate-800"><span id="live-score">0</span></div>
+                </div>
+                <div class="relative w-8 h-8">
+                    <svg class="w-full h-full" viewBox="0 0 100 100">
+                        <circle class="text-slate-200 stroke-current" stroke-width="10" cx="50" cy="50" r="40" fill="transparent"></circle>
+                        <circle id="mini-progress-circle" class="accent-text stroke-current progress-ring__circle" stroke-width="10" stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow flex flex-col items-center justify-center p-6 pt-24 w-full max-w-3xl mx-auto z-10">
+
+        <!-- Motivational Toast (Fixed Position) -->
+        <div id="motivation-toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl z-50 hidden flex items-center gap-3">
+            <span class="text-xl">✊🏿</span>
+            <span id="motivation-text" class="font-medium text-sm">Solidarity forever!</span>
+        </div>
+
+        <!-- 1. Start Screen -->
+        <div id="start-screen" class="w-full card-enter text-center">
+            <div class="mb-10">
+                <div class="w-24 h-24 accent-bg rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-green-200">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                </div>
+                <h1 class="text-4xl font-bold text-slate-900 mb-3 tracking-tight">Women's Organizing in Ghana</h1>
+                <p class="text-slate-500 text-lg">From Individual Organizations to Coalitions</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">60</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">Questions</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">Coalitions</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">NETRIGHT, WMC, DV</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">History</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">1990s - 2000s</div>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full md:w-auto px-12 py-4 accent-bg hover-accent-bg text-white font-semibold rounded-lg shadow-lg shadow-green-200 transition-all transform hover:-translate-y-1">
+                Start Assessment
+            </button>
+        </div>
+
+        <!-- 2. Quiz Interface -->
+        <div id="quiz-screen" class="hidden w-full">
+            <!-- Question Header -->
+            <div class="mb-8 flex justify-between items-end border-b border-slate-200 pb-4">
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Question</span>
+                    <span class="text-3xl font-bold text-slate-800"><span id="current-q-num">1</span><span class="text-lg text-slate-400 font-normal">/60</span></span>
+                </div>
+                <div id="topic-badge" class="px-3 py-1 bg-green-100 accent-text text-xs font-bold uppercase tracking-wide rounded-md">
+                    Context
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div id="question-card" class="card-enter">
+                <h2 id="question-text" class="text-2xl font-medium text-slate-800 mb-8 leading-snug">
+                    Loading question...
+                </h2>
+
+                <!-- Options -->
+                <div id="options-container" class="space-y-3 mb-8">
+                    <!-- Buttons injected here -->
+                </div>
+
+                <!-- Feedback Section (Slides down) -->
+                <div id="feedback-area" class="hidden bg-slate-50 rounded-lg p-6 border-l-4 border-green-400">
+                    <div class="flex items-start gap-4">
+                        <div id="feedback-icon" class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                            <!-- Icon -->
+                        </div>
+                        <div class="flex-grow">
+                            <h3 id="feedback-title" class="font-bold text-lg mb-1">Correct</h3>
+                            <p id="feedback-explanation" class="text-slate-600 text-sm leading-relaxed">Explanation text...</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button onclick="nextQuestion()" class="accent-bg text-white px-6 py-2 rounded-md font-medium text-sm hover-accent-bg transition shadow-md">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Results Screen -->
+        <div id="result-screen" class="hidden w-full text-center card-enter">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">Quiz Complete</h2>
+            <p class="text-slate-500 mb-10">Here is your activism profile</p>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 mb-10">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-10">
+                    <!-- Final Score Chart -->
+                    <div class="relative w-48 h-48">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle class="text-slate-100" stroke-width="12" stroke="currentColor" fill="transparent" r="70" cx="96" cy="96" />
+                            <circle id="final-score-circle" class="accent-text" stroke-width="12" stroke-dasharray="439.8" stroke-dashoffset="439.8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="70" cx="96" cy="96" />
+                        </svg>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                            <span id="final-percentage" class="text-4xl font-bold text-slate-900 block">0%</span>
+                            <span class="text-xs text-slate-400 font-bold uppercase tracking-wide">Knowledge</span>
+                        </div>
+                    </div>
+
+                    <div class="text-left space-y-4 w-full md:w-auto">
+                        <div class="flex items-center justify-between gap-8 border-b border-slate-50 pb-2">
+                            <span class="text-sm text-slate-500">Correct Answers</span>
+                            <span id="final-correct" class="font-bold text-green-600 text-xl">0</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-8 border-b border-slate-50 pb-2">
+                            <span class="text-sm text-slate-500">Incorrect Answers</span>
+                            <span id="final-wrong" class="font-bold text-red-500 text-xl">0</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-8">
+                            <span class="text-sm text-slate-500">Total Questions</span>
+                            <span id="final-total" class="font-bold text-slate-900 text-xl">60</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Section Toggle -->
+            <div id="review-container" class="hidden text-left mb-10">
+                <h3 class="font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">Review Incorrect Answers</h3>
+                <div id="review-list" class="space-y-4">
+                    <!-- Wrong answers injected here -->
+                </div>
+            </div>
+
+            <div class="flex gap-4 justify-center">
+                <button onclick="toggleReview()" id="review-btn" class="hidden px-8 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:border-slate-300 transition">
+                    Review Mistakes
+                </button>
+                <button onclick="location.reload()" class="px-8 py-3 accent-bg text-white font-medium rounded-lg hover-accent-bg transition shadow-lg shadow-green-200">
+                    Retake Quiz
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Milestone Modal (Every 10 questions) -->
+    <div id="milestone-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300" id="milestone-content">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Movement Update</h3>
+                <p class="text-slate-500 text-sm mb-6">You've engaged with <span id="milestone-count">0</span> questions.</p>
+                
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+                        <circle id="milestone-circle" class="accent-text transition-all duration-1000 ease-out" stroke-width="8" stroke-dasharray="364" stroke-dashoffset="364" stroke-linecap="round" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+                    </svg>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <span id="milestone-percent" class="text-2xl font-bold text-slate-800">0%</span>
+                    </div>
+                </div>
+
+                <p id="milestone-msg" class="text-sm font-medium accent-text mb-6">Building a strong coalition!</p>
+
+                <button onclick="closeMilestone()" class="w-full py-3 accent-bg text-white rounded-lg font-medium hover-accent-bg transition">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Questions Data ---
+        // Sourced from Women+Organising+in+Ghana.pdf
+        const questions = [
+            // Historical Background
+            {
+                q: "Which organization was formed by merging two national women's organizations in the post-independence period?",
+                options: ["31st December Women's Movement", "National Council of Ghana Women", "Federation of Ghana Women", "NETRIGHT"],
+                answer: 1,
+                topic: "History",
+                explanation: "In the post-independence period, two national organizations were merged to form the National Council of Ghana Women."
+            },
+            {
+                q: "The National Council of Ghana Women became an integral part of which political party?",
+                options: ["National Democratic Congress (NDC)", "New Patriotic Party (NPP)", "Convention Peoples Party (CPP)", "United Gold Coast Convention (UGCC)"],
+                answer: 2,
+                topic: "History",
+                explanation: "The Council became an integral part of the ruling Convention Peoples Party (CPP) under Kwame Nkrumah."
+            },
+            {
+                q: "What happened to the National Council of Ghana Women in 1966?",
+                options: ["It became independent", "It was disbanded", "It merged with the 31st DWM", "It was renamed"],
+                answer: 1,
+                topic: "History",
+                explanation: "It was disbanded along with the CPP when the government of Kwame Nkrumah was overthrown in 1966."
+            },
+            {
+                q: "Which organization dominated the landscape of women's organizing in the 1980s and 1990s?",
+                options: ["The Federation of Ghana Women", "NETRIGHT", "31st December Women's Movement (DWM)", "Abantu for Development"],
+                answer: 2,
+                topic: "History",
+                explanation: "The 31st December Women's Movement (DWM), led by Mrs. Rawlings, dominated during this period."
+            },
+            {
+                q: "The 31st December Women's Movement was led by:",
+                options: ["Amina Mama", "Dzodzi Tsikata", "Mrs. Rawlings", "Rose Mensah-Kutin"],
+                answer: 2,
+                topic: "History",
+                explanation: "It was led by Mrs. Rawlings, the wife of Ghana's then head of state."
+            },
+            // NGO-ization
+            {
+                q: "What concept refers to the growing dominance of a particular organizational form characterized by lack of a mass base?",
+                options: ["Democratization", "NGO-ization", "Liberalization", "Globalization"],
+                answer: 1,
+                topic: "NGO-ization",
+                explanation: "NGO-ization refers to the dominance of organizations that lack a mass base and prioritize technocratic approaches."
+            },
+            {
+                q: "Which of the following is a characteristic of NGO-ization?",
+                options: ["Mass movement building", "Donor dependence", "Overt political partisanship", "Long-term broad agendas"],
+                answer: 1,
+                topic: "NGO-ization",
+                explanation: "NGO-ization is characterized by donor dependence, short-term projects, and a lack of accountability to a mass base."
+            },
+            {
+                q: "According to the text, NGO-ization results in the prioritization of what over politics?",
+                options: ["Religion", "Professional technocratic approach", "Traditional culture", "Military intervention"],
+                answer: 1,
+                topic: "NGO-ization",
+                explanation: "It prioritizes a professional technocratic approach because NGOs often cannot be overtly political."
+            },
+            {
+                q: "What has been identified as a key factor in the lack of progress on women's rights globally since the 1990s?",
+                options: ["Too much funding", "NGO-ization", "Lack of education", "Technology"],
+                answer: 1,
+                topic: "NGO-ization",
+                explanation: "Three decades of NGO-ization has been identified as a key factor in the lack of progress due to lack of sustained mass power."
+            },
+            {
+                q: "It is argued that while NGOs can change formal mechanisms (laws), only ______ can change embedded oppression.",
+                options: ["Governments", "Donors", "Movements", "Researchers"],
+                answer: 2,
+                topic: "NGO-ization",
+                explanation: "Batliwala (2008) argues that movements have the power to change embedded/hidden aspects of oppression."
+            },
+            // 1990s Political Context
+            {
+                q: "What major political change occurred in Ghana in 1992?",
+                options: ["Military coup", "Introduction of multi-party constitutional rule", "Independence from Britain", "Adoption of socialism"],
+                answer: 1,
+                topic: "1990s Context",
+                explanation: "The 1990s saw the introduction of multi-party constitutional rule in Ghana from 1992."
+            },
+            {
+                q: "In the 1990s, women's organizations were often accused of being:",
+                options: ["Too rural", "Elitist and influenced by foreign ideas", "Too religious", "Too conservative"],
+                answer: 1,
+                topic: "1990s Context",
+                explanation: "They had to contend with perceptions that their concerns were middle-class, urban, and foreign to Ghanaian culture."
+            },
+            {
+                q: "The principle of 'non-partisanship' espoused by NGOs was often interpreted as:",
+                options: ["Supporting all parties", "A non-political approach", "Supporting the opposition", "Voting only for women"],
+                answer: 1,
+                topic: "1990s Context",
+                explanation: "It was often taken to mean a non-political approach, leading to self-censorship on political issues."
+            },
+            {
+                q: "Which specific event between 1997 and 2000 shook the world of women's NGOs?",
+                options: ["A massive famine", "Serial killings of women", "A civil war", "A banking crisis"],
+                answer: 1,
+                topic: "Serial Killings",
+                explanation: "The serial killings of over 30 women in Accra mobilized women's groups to change their strategies."
+            },
+            {
+                q: "What was the name of the collective organized around the serial killings?",
+                options: ["Women's Front", "Sisters Keepers", "Safety First", "Action Now"],
+                answer: 1,
+                topic: "Serial Killings",
+                explanation: "A short-lived collective known as Sisters Keepers was organized around the serial killings."
+            },
+            {
+                q: "How did women's organizations change their methods during the serial killings crisis?",
+                options: ["They stopped working", "They used confrontational strategies (pickets, vigils)", "They focused only on research", "They left the country"],
+                answer: 1,
+                topic: "Serial Killings",
+                explanation: "They moved from safe advocacy to confrontational strategies like pickets, vigils, and demonstrations."
+            },
+            {
+                q: "After the 2000 elections, President Kuffuor announced the establishment of:",
+                options: ["A Gender Commission", "A Ministry for Women's Affairs", "A Women's Party", "A specific tax for women"],
+                answer: 1,
+                topic: "Political Context",
+                explanation: "President Kuffuor announced the establishment of a Ministry for Women's Affairs in his inaugural address."
+            },
+            {
+                q: "Why did women's groups initially oppose the creation of a Ministry for Women's Affairs?",
+                options: ["It would be too powerful", "It would be marginalized and starved of resources", "Men would run it", "It was unconstitutional"],
+                answer: 1,
+                topic: "Political Context",
+                explanation: "They feared it would be marginalized, under-resourced, and unable to influence policy across government."
+            },
+            {
+                q: "Relations between women's groups and the new Ministry (2001-2005) were characterized as:",
+                options: ["Harmonious", "Acrimonious and non-cooperative", "Indifferent", "Highly productive"],
+                answer: 1,
+                topic: "Political Context",
+                explanation: "The period was marked by acrimonious relations and non-cooperation until a new Minister was appointed in 2005."
+            },
+            // NETRIGHT
+            {
+                q: "What does NETRIGHT stand for?",
+                options: ["Network for Rights in Ghana", "Network for Women's Rights in Ghana", "National Equity Team Rights", "New Era Rights Group"],
+                answer: 1,
+                topic: "NETRIGHT",
+                explanation: "NETRIGHT stands for the Network for Women's Rights in Ghana."
+            },
+            {
+                q: "NETRIGHT was established in which year?",
+                options: ["1995", "1999", "2002", "2005"],
+                answer: 1,
+                topic: "NETRIGHT",
+                explanation: "NETRIGHT was established in 1999 following a workshop organized by Third World Network-Africa."
+            },
+            {
+                q: "What was NETRIGHT's first major activity?",
+                options: ["Building a hospital", "Producing an alternative report to the Beijing Plus Five review", "Organizing a protest", "Drafting a bill"],
+                answer: 1,
+                topic: "NETRIGHT",
+                explanation: "Its first activity was producing an alternative report to the government's report for the Beijing Plus Five review."
+            },
+            {
+                q: "NETRIGHT forged strong relations with which major mass organization?",
+                options: ["The Police Service", "Ghana Trades Union Congress (GTUC)", "The Military", "The Student Union"],
+                answer: 1,
+                topic: "NETRIGHT",
+                explanation: "NETRIGHT forged strong relations with the Ghana Trades Union Congress, which sits on its steering committee."
+            },
+            {
+                q: "How does NETRIGHT primarily fund itself to avoid donor dependency?",
+                options: ["Government grants", "Membership dues and women's funds", "Selling merchandise", "Corporate sponsorship"],
+                answer: 1,
+                topic: "NETRIGHT",
+                explanation: "It keeps costs low, collects dues, and relies on women's funds like AWDF and Global Fund for Women."
+            },
+            {
+                q: "NETRIGHT is largely engaged in advocacy for:",
+                options: ["Economic justice and land rights", "Healthcare only", "Religious freedom", "Traffic laws"],
+                answer: 0,
+                topic: "NETRIGHT",
+                explanation: "NETRIGHT is largely engaged in economic justice advocacy and promoting women's land rights."
+            },
+            {
+                q: "A continuing constraint for NETRIGHT is its lack of:",
+                options: ["Educated members", "Mass membership", "Office space", "International contacts"],
+                answer: 1,
+                topic: "NETRIGHT",
+                explanation: "Its lack of mass membership limits its ability to organize mass action and claims of representation."
+            },
+            {
+                q: "NETRIGHT has a regional focal point in how many regions of Ghana?",
+                options: ["Three", "Five", "Ten", "All districts"],
+                answer: 2,
+                topic: "NETRIGHT",
+                explanation: "NETRIGHT has a regional focal point in all ten regions of Ghana."
+            },
+            // Women's Manifesto (WMC)
+            {
+                q: "Which organization conceived the Women's Manifesto Project?",
+                options: ["The Gender Centre", "Abantu for Development", "The Ark Foundation", "FIDA"],
+                answer: 1,
+                topic: "Women's Manifesto",
+                explanation: "The Women's Manifesto Project and WMC were conceived by Abantu for Development."
+            },
+            {
+                q: "The Women's Manifesto for Ghana was launched in:",
+                options: ["2000", "2002", "2004", "2007"],
+                answer: 2,
+                topic: "Women's Manifesto",
+                explanation: "The Women's Manifesto was finally launched in September 2004."
+            },
+            {
+                q: "The drafting of the Women's Manifesto involved:",
+                options: ["Only foreign experts", "Only government officials", "A wide range of civil society groups and political parties", "Only Abantu staff"],
+                answer: 2,
+                topic: "Women's Manifesto",
+                explanation: "It involved political parties, women's organizations, unions, and professional associations."
+            },
+            {
+                q: "How did the then Minister for Women's Affairs react to the Manifesto launch?",
+                options: ["She supported it fully", "She tried to upstage it by launching her own policy", "She funded it", "She ignored it"],
+                answer: 1,
+                topic: "Women's Manifesto",
+                explanation: "She tried to upstage it by launching her own gender policy the day before and did not attend the launch."
+            },
+            {
+                q: "The main challenge facing the Manifesto Coalition has been:",
+                options: ["Drafting the document", "Sustaining mobilization for implementation", "Printing copies", "Finding a venue"],
+                answer: 1,
+                topic: "Women's Manifesto",
+                explanation: "The main challenge has been how to sustain mobilization around the implementation of its demands."
+            },
+            {
+                q: "Which constitutional body took up the dissemination of the Manifesto?",
+                options: ["The Supreme Court", "National Council on Civic Education (NCCE)", "The Parliament", "The Police Council"],
+                answer: 1,
+                topic: "Women's Manifesto",
+                explanation: "The NCCE, tasked with public education, took up the dissemination of the Manifesto."
+            },
+            {
+                q: "The Women's Manifesto project is described as a showcase of:",
+                options: ["Failure", "Broad-based political partnerships", "Government intervention", "Foreign imposition"],
+                answer: 1,
+                topic: "Women's Manifesto",
+                explanation: "It is a showcase of how partnerships with mass organizations can enable small NGOs to transcend limitations."
+            },
+            // DV Coalition
+            {
+                q: "The DV Coalition was established in:",
+                options: ["1998", "2002", "2005", "2007"],
+                answer: 1,
+                topic: "DV Coalition",
+                explanation: "The National Coalition on Domestic Violence Legislation (DV Coalition) was established in 2002."
+            },
+            {
+                q: "Research by groups like the Gender Centre found that ______ women in Ghana had experienced domestic violence.",
+                options: ["1 in 10", "1 in 3", "1 in 50", "All"],
+                answer: 1,
+                topic: "DV Coalition",
+                explanation: "Research found that one in three women in Ghana had experienced domestic violence."
+            },
+            {
+                q: "The Minister for Women's Affairs criticized the Domestic Violence Bill, claiming it would:",
+                options: ["Cost too much", "Threaten family harmony", "Increase divorce rates", "Be unenforceable"],
+                answer: 1,
+                topic: "DV Coalition",
+                explanation: "She argued in the media that the Bill was a threat to family harmony."
+            },
+            {
+                q: "Which section of the Criminal Code (1960) was a major point of contention?",
+                options: ["Section 100", "Section 42(g)", "Section 1", "Section 30"],
+                answer: 1,
+                topic: "DV Coalition",
+                explanation: "Section 42(g) was the 'marital rape clause' which implied consent given at marriage could not be revoked."
+            },
+            {
+                q: "The 'marital rape clause' controversy centered on the idea that:",
+                options: ["Marriage implies permanent consent to sex", "Rape does not exist", "Men cannot be raped", "Women are property"],
+                answer: 0,
+                topic: "DV Coalition",
+                explanation: "The clause suggested that because marriage is considered consent, a husband cannot be prosecuted for rape."
+            },
+            {
+                q: "The Domestic Violence Act was finally passed in:",
+                options: ["2000", "2005", "2007", "2009"],
+                answer: 2,
+                topic: "DV Coalition",
+                explanation: "After years of struggle, the Domestic Violence Act was passed in February 2007."
+            },
+            {
+                q: "Was Section 42(g) repealed by the Domestic Violence Act itself?",
+                options: ["Yes", "No", "Partially", "Only for some regions"],
+                answer: 1,
+                topic: "DV Coalition",
+                explanation: "No, it was not repealed by the DV Act to avoid public backlash; it was repealed quietly in a separate exercise."
+            },
+            {
+                q: "How was Section 42(g) eventually removed?",
+                options: ["It wasn't", "By a Supreme Court ruling", "Through a bureaucratic exercise repealing obsolete provisions", "By a referendum"],
+                answer: 2,
+                topic: "DV Coalition",
+                explanation: "It was removed in a bureaucratic exercise to repeal obsolete provisions to ensure compliance with the Constitution."
+            },
+            // Comparisons & General
+            {
+                q: "Which coalition focused on passing a specific piece of legislation?",
+                options: ["NETRIGHT", "WMC", "DV Coalition", "Sisters Keepers"],
+                answer: 2,
+                topic: "Comparison",
+                explanation: "The DV Coalition was created specifically to enable the passage of the Domestic Violence Bill."
+            },
+            {
+                q: "Which coalition focused on producing a document and advocating its adoption?",
+                options: ["NETRIGHT", "WMC", "DV Coalition", "Abantu"],
+                answer: 1,
+                topic: "Comparison",
+                explanation: "The Coalition on the Women's Manifesto (WMC) focused on producing and advocating for the Manifesto."
+            },
+            {
+                q: "All three coalitions had to fashion relationships with which Ministry?",
+                options: ["Ministry of Finance", "MOWAC (Women and Children's Affairs)", "Ministry of Justice", "Ministry of Health"],
+                answer: 1,
+                topic: "Comparison",
+                explanation: "All three had to engage with the Ministry for Women and Children's Affairs (MOWAC)."
+            },
+            {
+                q: "The text concludes that to sustain progress, there is a need for:",
+                options: ["More foreign aid", "A conscious long-term agenda of movement building", "More legislation", "Less politics"],
+                answer: 1,
+                topic: "Conclusion",
+                explanation: "Tsikata argues for movement building and strengthening common platforms to transcend NGO limitations."
+            },
+            // Additional Questions to reach 60
+            {
+                q: "Before 1966, the National Council of Ghana Women was affiliated with:",
+                options: ["The Opposition", "The Ruling CPP", "The UN", "The Church"],
+                answer: 1,
+                topic: "History",
+                explanation: "It became an integral part of the then ruling Convention Peoples Party (CPP)."
+            },
+            {
+                q: "The gap in national women's organizing lasted approximately how long after 1966?",
+                options: ["5 years", "10 years", "15 years", "20 years"],
+                answer: 2,
+                topic: "History",
+                explanation: "There was a gap of close to 15 years in national organizing until the early 1980s."
+            },
+            {
+                q: "Which women's organization was led by the wife of the head of state in the 1980s?",
+                options: ["NETRIGHT", "31st DWM", "Abantu", "FIDA"],
+                answer: 1,
+                topic: "History",
+                explanation: "The 31st December Women's Movement was led by Mrs. Rawlings."
+            },
+            {
+                q: "Neo-liberal agendas actively promote:",
+                options: ["Mass movements", "NGO-ization", "Socialism", "State control"],
+                answer: 1,
+                topic: "NGO-ization",
+                explanation: "National and global neo-liberal agendas are said to actively promote the NGO organizational form."
+            },
+            {
+                q: "NGOs often prioritize technocratic approaches because:",
+                options: ["They are smarter", "They cannot be overtly political or partisan", "It is cheaper", "It is faster"],
+                answer: 1,
+                topic: "NGO-ization",
+                explanation: "The principle of non-partisanship often forces NGOs to adopt technocratic rather than political approaches."
+            },
+            {
+                q: "The serial killings involved the murder of over ______ women.",
+                options: ["10", "20", "30", "50"],
+                answer: 2,
+                topic: "Serial Killings",
+                explanation: "Over 30 dead women turned up in different parts of Accra."
+            },
+            {
+                q: "When was the Ministry for Women's Affairs established?",
+                options: ["1992", "1997", "2001", "2005"],
+                answer: 2,
+                topic: "Political Context",
+                explanation: "It was established in 2001 by President Kuffuor after his election victory."
+            },
+            {
+                q: "NETRIGHT's Steering Committee has how many members?",
+                options: ["Five", "Seven", "Nine", "Twelve"],
+                answer: 2,
+                topic: "NETRIGHT",
+                explanation: "NETRIGHT has a nine-member steering committee."
+            },
+            {
+                q: "Which organization hosted the secretariat of NETRIGHT initially?",
+                options: ["TWN-Africa", "One of its organizational members", "The UN", "The Government"],
+                answer: 1,
+                topic: "NETRIGHT",
+                explanation: "It was hosted by one of its organizational members."
+            },
+            {
+                q: "The Women's Manifesto involved consultation with:",
+                options: ["Political parties", "District assemblies", "Media", "All of the above"],
+                answer: 3,
+                topic: "Women's Manifesto",
+                explanation: "It involved consultations with parties, women's organizations, assembly members, and the media."
+            },
+            {
+                q: "The DV Coalition used which strategy to press its case?",
+                options: ["Silent lobbying only", "Demonstrations, pickets, and media events", "Bribery", "Strikes"],
+                answer: 1,
+                topic: "DV Coalition",
+                explanation: "They used demonstrations, pickets, press conferences, and media events."
+            },
+            {
+                q: "The three coalitions came together to organize an alternative celebration for:",
+                options: ["Christmas", "International Women's Day", "Ghana at 50", "The President's Birthday"],
+                answer: 2,
+                topic: "Collaboration",
+                explanation: "They implemented an alternative 'Ghana at 50' celebration."
+            },
+            {
+                q: "The coalitions also collaborated regarding the destruction of wares at:",
+                options: ["Makola Market", "Tema Station Market", "Kumasi Central Market", "Kaneshie Market"],
+                answer: 1,
+                topic: "Collaboration",
+                explanation: "They collaborated to deal with the destruction of women traders' wares at the Tema Station market."
+            }
+        ];
+
+        // --- Motivational Messages ---
+        const encouragements = [
+            "Your awareness is growing! 🌻",
+            "Great job! Keep organizing your thoughts! ✊🏿",
+            "Solidarity with your progress! 🤝",
+            "Excellent! You know your history! 📜",
+            "You're building a movement of knowledge! 🚀",
+            "Breaking barriers! Keep going! 🧱",
+            "A true advocate for learning! 📢",
+            "Empowerment through education! 💡",
+            "You're crushing the patriarchy (and this quiz)! 🔥"
+        ];
+
+        // --- State Variables ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let wrongAnswers = [];
+        const totalQuestions = questions.length;
+
+        // --- DOM Elements ---
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackExplanation = document.getElementById('feedback-explanation');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const topicBadge = document.getElementById('topic-badge');
+        const currentQNum = document.getElementById('current-q-num');
+        const liveScore = document.getElementById('live-score');
+        const miniProgressContainer = document.getElementById('mini-progress-container');
+        const miniProgressCircle = document.getElementById('mini-progress-circle');
+
+        // Milestone Elements
+        const milestoneModal = document.getElementById('milestone-modal');
+        const milestoneContent = document.getElementById('milestone-content');
+        const milestoneCount = document.getElementById('milestone-count');
+        const milestonePercent = document.getElementById('milestone-percent');
+        const milestoneCircle = document.getElementById('milestone-circle');
+
+        // Toast Element
+        const motivationToast = document.getElementById('motivation-toast');
+        const motivationText = document.getElementById('motivation-text');
+
+        // --- Functions ---
+
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            miniProgressContainer.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            
+            // Reset UI
+            feedbackArea.classList.add('hidden');
+            optionsContainer.innerHTML = '';
+            
+            // Text Content
+            questionText.textContent = currentQ.q;
+            currentQNum.textContent = currentQuestionIndex + 1;
+            topicBadge.textContent = currentQ.topic;
+            
+            // Update Mini Progress Ring
+            const progressPercent = ((currentQuestionIndex) / totalQuestions) * 100;
+            const offset = 251.2 - (251.2 * progressPercent / 100);
+            miniProgressCircle.style.strokeDashoffset = offset;
+
+            // Generate Options
+            currentQ.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-left p-5 rounded-xl border-2 border-green-200 bg-white text-slate-700 font-medium text-lg`;
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const currentQ = questions[currentQuestionIndex];
+            const buttons = optionsContainer.getElementsByTagName('button');
+            
+            // Disable all buttons
+            for(let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+            }
+
+            const isCorrect = selectedIndex === currentQ.answer;
+
+            // Style Feedback Area
+            feedbackArea.classList.remove('hidden', 'border-red-200', 'border-green-200');
+            feedbackIcon.classList.remove('bg-red-100', 'text-red-600', 'bg-green-100', 'text-green-600');
+            feedbackTitle.classList.remove('text-red-700', 'text-green-700');
+
+            if (isCorrect) {
+                // Button Styling
+                btnElement.classList.remove('border-green-200', 'bg-white', 'opacity-60');
+                btnElement.classList.add('border-green-500', 'bg-green-50', 'text-green-900', 'font-bold');
+                
+                // Feedback Styling
+                feedbackArea.classList.add('border-green-200');
+                feedbackIcon.classList.add('bg-green-100', 'text-green-600');
+                feedbackIcon.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`;
+                feedbackTitle.textContent = "Correct Answer";
+                feedbackTitle.classList.add('text-green-700');
+                
+                score++;
+                liveScore.textContent = score;
+            } else {
+                // User's Wrong Button
+                btnElement.classList.remove('border-green-200', 'bg-white', 'opacity-60');
+                btnElement.classList.add('border-red-500', 'bg-red-50', 'text-red-900');
+                
+                // Correct Button Highlight
+                const correctBtn = buttons[currentQ.answer];
+                correctBtn.classList.remove('border-green-200', 'bg-white', 'opacity-60');
+                correctBtn.classList.add('border-green-500', 'bg-green-50', 'text-green-900', 'font-bold');
+
+                // Feedback Styling
+                feedbackArea.classList.add('border-red-200');
+                feedbackIcon.classList.add('bg-red-100', 'text-red-600');
+                feedbackIcon.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                feedbackTitle.textContent = "Incorrect Answer";
+                feedbackTitle.classList.add('text-red-700');
+
+                // Track Wrong Answer
+                wrongAnswers.push({
+                    q: currentQ.q,
+                    userAns: currentQ.options[selectedIndex],
+                    correctAns: currentQ.options[currentQ.answer],
+                    explanation: currentQ.explanation
+                });
+            }
+
+            feedbackExplanation.textContent = currentQ.explanation;
+            
+            // Slide down animation
+            feedbackArea.classList.add('card-enter');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            // Check for Milestone (Every 10 questions)
+            if (currentQuestionIndex > 0 && currentQuestionIndex % 10 === 0 && currentQuestionIndex < totalQuestions) {
+                showMilestone();
+                return;
+            }
+
+            // Check for Motivation (Every 3 questions)
+            if (currentQuestionIndex > 0 && currentQuestionIndex % 3 === 0) {
+                showMotivation();
+            }
+
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showMotivation() {
+            const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+            motivationText.textContent = msg;
+            motivationToast.classList.remove('hidden');
+            motivationToast.classList.add('toast-enter');
+            
+            setTimeout(() => {
+                motivationToast.classList.add('hidden');
+            }, 3000);
+        }
+
+        function showMilestone() {
+            quizScreen.classList.add('blur-sm');
+            milestoneModal.classList.remove('hidden');
+            // Trigger Fade In
+            setTimeout(() => {
+                milestoneModal.classList.remove('opacity-0');
+                document.getElementById('milestone-content').classList.remove('scale-95');
+                document.getElementById('milestone-content').classList.add('scale-100');
+            }, 10);
+
+            // Update Data
+            const percent = Math.round((score / currentQuestionIndex) * 100);
+            milestoneCount.textContent = currentQuestionIndex;
+            milestonePercent.textContent = `${percent}%`;
+
+            // Animate Circle
+            // Radius 58 => Circumference ~364
+            const offset = 364 - (364 * percent / 100);
+            setTimeout(() => {
+                milestoneCircle.style.strokeDashoffset = offset;
+            }, 300);
+        }
+
+        function closeMilestone() {
+            milestoneModal.classList.add('opacity-0');
+            setTimeout(() => {
+                milestoneModal.classList.add('hidden');
+                quizScreen.classList.remove('blur-sm');
+                loadQuestion();
+            }, 300);
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            miniProgressContainer.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Animate Final Score Circle
+            // Radius 70 => Circumference ~439.8
+            const circle = document.getElementById('final-score-circle');
+            const offset = 439.8 - (439.8 * percentage / 100);
+            
+            setTimeout(() => {
+                circle.style.transition = 'stroke-dashoffset 1.5s ease-out';
+                circle.style.strokeDashoffset = offset;
+            }, 500);
+
+            document.getElementById('final-percentage').textContent = `${percentage}%`;
+            document.getElementById('final-correct').textContent = score;
+            document.getElementById('final-wrong').textContent = wrongAnswers.length;
+            document.getElementById('final-total').textContent = `${score} pts`;
+
+            // Populate Review Section if there are errors
+            const reviewBtn = document.getElementById('review-btn');
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+
+            if (wrongAnswers.length > 0) {
+                reviewBtn.classList.remove('hidden');
+                wrongAnswers.forEach((item, i) => {
+                    const div = document.createElement('div');
+                    div.className = "bg-white p-4 rounded-lg border border-green-200 shadow-sm";
+                    div.innerHTML = `
+                        <p class="font-bold text-slate-800 text-sm mb-2">${i+1}. ${item.q}</p>
+                        <div class="flex flex-col gap-2 text-sm">
+                            <div class="flex items-center gap-2 text-red-600 bg-red-50 p-2 rounded">
+                                <span class="font-bold">✘ You:</span> ${item.userAns}
+                            </div>
+                            <div class="flex items-center gap-2 text-green-700 bg-green-50 p-2 rounded">
+                                <span class="font-bold">✔ Correct:</span> ${item.correctAns}
+                            </div>
+                            <div class="text-slate-500 italic mt-1 pl-2 border-l-2 border-green-200">
+                                💡 ${item.explanation}
+                            </div>
+                        </div>
+                    `;
+                    reviewList.appendChild(div);
+                });
+            }
+        }
+
+        function toggleReview() {
+            const container = document.getElementById('review-container');
+            container.classList.toggle('hidden');
+            // smooth scroll to review
+            if(!container.classList.contains('hidden')) {
+                container.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+    </script>
+</body>
+</html>
